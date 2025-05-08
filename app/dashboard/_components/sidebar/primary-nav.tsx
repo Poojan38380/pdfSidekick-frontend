@@ -39,7 +39,7 @@ export function PrimaryNav() {
               defaultOpen={isActiveGroup}
               className={cn(
                 "group/collapsible rounded-2xl transition-all duration-200",
-                isActiveGroup && "bg-accent/30"
+                isActiveGroup && "bg-accent/10"
               )}
             >
               <SidebarMenuItem>

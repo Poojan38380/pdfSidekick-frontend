@@ -1,4 +1,3 @@
-import { Role, Status } from "@prisma/client";
 
 declare module "next-auth" {
   interface User {
@@ -8,9 +7,6 @@ declare module "next-auth" {
     username: string;
     profilePic: string;
     email: string;
-    user_role: Role;
-    status: Status;
-    telegramNumber: string;
   }
 
   interface Session {
