@@ -11,13 +11,14 @@ import { BottomNav } from "./bottom-nav";
 import { PrimaryNav } from "./primary-nav";
 import { NavUser } from "./nav-user";
 import { SecondaryNav } from "./secondary-nav";
+import Link from "next/link";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader className="pt-3">
-        <a
-          href="/dashboard"
+        <Link
+          href="/"
           className="grow flex gap-2"
           aria-label="Go to PDF Sidekick Dashboard"
         >
@@ -33,7 +34,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <span className="truncate font-semibold">PDF Sidekick</span>
             <span className="truncate text-xs">Talk to your PDFs</span>
           </div>
-        </a>
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <PrimaryNav />
