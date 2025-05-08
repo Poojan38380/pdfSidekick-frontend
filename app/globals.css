@@ -80,89 +80,139 @@
       transform: translateZ(0) rotate(360deg);
     }
   }
+
+  /* Adding a playful bounce animation */
+  --animate-bounce-subtle: bounce-subtle 2s ease-in-out infinite;
+  @keyframes bounce-subtle {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+
+  /* Adding a playful pulse animation */
+  --animate-pulse-playful: pulse-playful 3s ease-in-out infinite;
+  @keyframes pulse-playful {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  --animate-line-shadow: line-shadow 15s linear infinite;
+  @keyframes line-shadow {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 100% -100%;
+    }
+  }
+  @keyframes line-shadow {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 100% -100%;
+    }
+  }
+  @keyframes line-shadow {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 100% -100%;
+    }
+  }
 }
 
 :root {
-  --radius: 0.5rem;
-  --background: oklch(0.98 0.01 0);
+  --radius: 0.75rem; /* Increased radius for a more playful look */
+  --background: oklch(0.99 0.01 0);
   --foreground: oklch(0.2 0.01 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.2 0.01 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.2 0.01 0);
-  --primary: oklch(0.55 0.2 250);
-  --primary-foreground: oklch(0.98 0.01 0);
-  --secondary: oklch(0.96 0.01 0);
+  --primary: oklch(0.65 0.26 25); /* PDF red color (#ff3131) */
+  --primary-foreground: oklch(0.99 0.01 0);
+  --secondary: oklch(0.97 0.05 60); /* Soft yellow for playfulness */
   --secondary-foreground: oklch(0.2 0.01 0);
-  --muted: oklch(0.96 0.01 0);
+  --muted: oklch(0.97 0.01 0);
   --muted-foreground: oklch(0.5 0.01 0);
-  --accent: oklch(0.96 0.01 0);
+  --accent: oklch(0.9 0.1 200); /* Soft blue accent */
   --accent-foreground: oklch(0.2 0.01 0);
-  --destructive: oklch(0.65 0.25 30);
-  --success: oklch(0.65 0.25 150);
-  --warning: oklch(0.7 0.25 90);
+  --destructive: oklch(0.65 0.26 25); /* Same as primary (red) */
+  --success: oklch(0.7 0.25 150); /* Bright green */
+  --warning: oklch(0.75 0.25 90); /* Bright orange */
   --border: oklch(0.9 0.01 0);
   --input: oklch(0.9 0.01 0);
-  --ring: oklch(0.55 0.2 250);
-  --chart-1: oklch(0.55 0.2 250);
-  --chart-2: oklch(0.6 0.15 180);
-  --chart-3: oklch(0.65 0.2 120);
-  --chart-4: oklch(0.7 0.15 60);
-  --chart-5: oklch(0.75 0.2 0);
-  --sidebar: oklch(0.98 0.01 0);
+  --ring: oklch(0.65 0.26 25); /* Match primary */
+  --chart-1: oklch(0.65 0.26 25); /* Primary red */
+  --chart-2: oklch(0.7 0.2 60); /* Orange */
+  --chart-3: oklch(0.75 0.2 120); /* Green */
+  --chart-4: oklch(0.7 0.15 200); /* Blue */
+  --chart-5: oklch(0.65 0.2 280); /* Purple */
+  --sidebar: oklch(0.99 0.01 0);
   --sidebar-foreground: oklch(0.2 0.01 0);
-  --sidebar-primary: oklch(0.55 0.2 250);
-  --sidebar-primary-foreground: oklch(0.98 0.01 0);
-  --sidebar-accent: oklch(0.96 0.01 0);
+  --sidebar-primary: oklch(0.65 0.26 25); /* Match primary */
+  --sidebar-primary-foreground: oklch(0.99 0.01 0);
+  --sidebar-accent: oklch(0.97 0.05 60); /* Match secondary */
   --sidebar-accent-foreground: oklch(0.2 0.01 0);
   --sidebar-border: oklch(0.9 0.01 0);
-  --sidebar-ring: oklch(0.55 0.2 250);
-  --color-1: hsl(250, 95%, 60%);
-  --color-2: hsl(180, 95%, 60%);
-  --color-3: hsl(120, 95%, 60%);
-  --color-4: hsl(60, 95%, 60%);
-  --color-5: hsl(0, 95%, 60%);
+  --sidebar-ring: oklch(0.65 0.26 25); /* Match primary */
+  --color-1: hsl(25, 95%, 60%); /* Red-orange */
+  --color-2: hsl(60, 95%, 60%); /* Yellow */
+  --color-3: hsl(120, 95%, 60%); /* Green */
+  --color-4: hsl(200, 95%, 60%); /* Blue */
+  --color-5: hsl(280, 95%, 60%); /* Purple */
 }
 
 .dark {
-  --background: oklch(0.2 0.01 0);
-  --foreground: oklch(0.98 0.01 0);
-  --card: oklch(0.25 0.01 0);
-  --card-foreground: oklch(0.98 0.01 0);
-  --popover: oklch(0.25 0.01 0);
-  --popover-foreground: oklch(0.98 0.01 0);
-  --primary: oklch(0.65 0.2 250);
-  --primary-foreground: oklch(0.98 0.01 0);
-  --secondary: oklch(0.3 0.01 0);
-  --secondary-foreground: oklch(0.98 0.01 0);
-  --muted: oklch(0.3 0.01 0);
-  --muted-foreground: oklch(0.7 0.01 0);
-  --accent: oklch(0.3 0.01 0);
-  --accent-foreground: oklch(0.98 0.01 0);
-  --destructive: oklch(0.75 0.25 30);
-  --success: oklch(0.75 0.25 150);
-  --warning: oklch(0.8 0.25 90);
+  --background: oklch(0.15 0.01 0);
+  --foreground: oklch(0.99 0.01 0);
+  --card: oklch(0.2 0.01 0);
+  --card-foreground: oklch(0.99 0.01 0);
+  --popover: oklch(0.2 0.01 0);
+  --popover-foreground: oklch(0.99 0.01 0);
+  --primary: oklch(0.7 0.26 25); /* Brighter PDF red for dark mode */
+  --primary-foreground: oklch(0.99 0.01 0);
+  --secondary: oklch(0.35 0.05 60); /* Darker yellow */
+  --secondary-foreground: oklch(0.99 0.01 0);
+  --muted: oklch(0.25 0.01 0);
+  --muted-foreground: oklch(0.75 0.01 0);
+  --accent: oklch(0.3 0.1 200); /* Darker blue accent */
+  --accent-foreground: oklch(0.99 0.01 0);
+  --destructive: oklch(0.75 0.26 25); /* Brighter red */
+  --success: oklch(0.75 0.25 150); /* Brighter green */
+  --warning: oklch(0.8 0.25 90); /* Brighter orange */
   --border: oklch(0.3 0.01 0);
   --input: oklch(0.3 0.01 0);
-  --ring: oklch(0.65 0.2 250);
-  --chart-1: oklch(0.65 0.2 250);
-  --chart-2: oklch(0.7 0.15 180);
-  --chart-3: oklch(0.75 0.2 120);
-  --chart-4: oklch(0.8 0.15 60);
-  --chart-5: oklch(0.85 0.2 0);
-  --sidebar: oklch(0.25 0.01 0);
-  --sidebar-foreground: oklch(0.98 0.01 0);
-  --sidebar-primary: oklch(0.65 0.2 250);
-  --sidebar-primary-foreground: oklch(0.98 0.01 0);
-  --sidebar-accent: oklch(0.3 0.01 0);
-  --sidebar-accent-foreground: oklch(0.98 0.01 0);
+  --ring: oklch(0.7 0.26 25); /* Match primary */
+  --chart-1: oklch(0.7 0.26 25); /* Primary red */
+  --chart-2: oklch(0.75 0.2 60); /* Orange */
+  --chart-3: oklch(0.8 0.2 120); /* Green */
+  --chart-4: oklch(0.75 0.15 200); /* Blue */
+  --chart-5: oklch(0.7 0.2 280); /* Purple */
+  --sidebar: oklch(0.2 0.01 0);
+  --sidebar-foreground: oklch(0.99 0.01 0);
+  --sidebar-primary: oklch(0.7 0.26 25); /* Match primary */
+  --sidebar-primary-foreground: oklch(0.99 0.01 0);
+  --sidebar-accent: oklch(0.35 0.05 60); /* Match secondary */
+  --sidebar-accent-foreground: oklch(0.99 0.01 0);
   --sidebar-border: oklch(0.3 0.01 0);
-  --sidebar-ring: oklch(0.65 0.2 250);
-  --color-1: hsl(250, 95%, 70%);
-  --color-2: hsl(180, 95%, 70%);
-  --color-3: hsl(120, 95%, 70%);
-  --color-4: hsl(60, 95%, 70%);
-  --color-5: hsl(0, 95%, 70%);
+  --sidebar-ring: oklch(0.7 0.26 25); /* Match primary */
+  --color-1: hsl(25, 95%, 70%); /* Brighter red-orange */
+  --color-2: hsl(60, 95%, 70%); /* Brighter yellow */
+  --color-3: hsl(120, 95%, 70%); /* Brighter green */
+  --color-4: hsl(200, 95%, 70%); /* Brighter blue */
+  --color-5: hsl(280, 95%, 70%); /* Brighter purple */
 }
 
 @layer base {
@@ -171,5 +221,27 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Adding some playful hover effects for interactive elements */
+  button,
+  a {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  button:hover,
+  a:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Add a subtle shadow to cards for depth */
+  .card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
   }
 }

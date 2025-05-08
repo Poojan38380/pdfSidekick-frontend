@@ -81,13 +81,15 @@ const Header = () => {
             {status === "authenticated" ? (
               <section className="flex items-center space-x-2">
                 <Link href="/dashboard">
-                  <Button className="px-4 py-1 ">Dashboard</Button>
+                  <Button className="px-4 py-1 cursor-pointer ">
+                    Dashboard
+                  </Button>
                 </Link>
               </section>
             ) : (
               <div className="flex items-center space-x-4">
                 <Link href="/auth/login">
-                  <Button className="px-4 py-1 ">Login</Button>
+                  <Button className="px-4 py-1 cursor-pointer ">Login</Button>
                 </Link>
               </div>
             )}
