@@ -16,19 +16,19 @@ const HeroSection = () => {
                 <span>
                   <LineShadowText className="italic ">Instantly</LineShadowText>
                 </span>{" "}
-                Answered
+                <LineShadowText className="italic "> Answered</LineShadowText>
               </h1>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
                 Upload your PDFs and ask questions in plain English. Get
                 accurate answers in seconds without reading hundreds of pages.
               </p>
+              <Link href="/dashboard">
+                <Button size="lg" className="gap-2 text-xl py-6 cursor-pointer">
+                  <FileSearch className="h-12 w-12" />
+                  Upload Your First PDF
+                </Button>
+              </Link>
             </div>
-            <Link href="/dashboard">
-              <Button size="lg" className="gap-2 text-xl py-6 cursor-pointer">
-                <FileSearch className="h-12 w-12" />
-                Upload Your First PDF
-              </Button>
-            </Link>
 
             <div className="mt-6">
               <p className="text-sm text-muted-foreground flex items-center gap-1">
@@ -58,7 +58,7 @@ const HeroSection = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-2 justify-end">
-                    <div className="flex-1 rounded-lg border bg-primary text-white p-3 text-sm">
+                    <div className="flex-1 rounded-lg border bg-primary/60 text-primary-foreground p-3 text-sm">
                       <p>
                         Based on Section 3 of the contract, the main arguments
                         are:
