@@ -1,8 +1,6 @@
 import React from "react";
-import { LineShadowText } from "@/components/magicui/line-shadow-text";
-import { Button } from "@/components/ui/button";
-import { FileSearch, Book } from "lucide-react";
-import Link from "next/link";
+import { Book } from "lucide-react";
+import HeroSectionHeader from "./HeroSectionHeader";
 
 const HeroSection = () => {
   return (
@@ -10,25 +8,7 @@ const HeroSection = () => {
       <div className="container px-4 md:px-6">
         <div className="grid gap-6 lg:grid-cols-[1fr_550px] lg:gap-12 xl:grid-cols-[1fr_700px]">
           <div className="flex flex-col justify-center space-y-4">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-                Your PDF Documents,{" "}
-                <span>
-                  <LineShadowText className="italic ">Instantly</LineShadowText>
-                </span>{" "}
-                <LineShadowText className="italic "> Answered</LineShadowText>
-              </h1>
-              <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                Upload your PDFs and ask questions in plain English. Get
-                accurate answers in seconds without reading hundreds of pages.
-              </p>
-              <Link href="/dashboard">
-                <Button size="lg" className="gap-2 text-xl py-6 cursor-pointer">
-                  <FileSearch className="h-12 w-12" />
-                  Upload Your First PDF
-                </Button>
-              </Link>
-            </div>
+            <HeroSectionHeader />
 
             <div className="mt-6">
               <p className="text-sm text-muted-foreground flex items-center gap-1">
