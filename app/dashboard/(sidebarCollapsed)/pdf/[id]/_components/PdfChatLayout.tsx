@@ -7,15 +7,26 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Send } from "lucide-react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
+import { PdfViewer } from "./PdfViewer";
 
 interface PdfChatLayoutProps {
   pdf: {
+    id: string;
     title: string;
+    description: string;
+    created_at: string;
+    updated_at: string;
+    document_link: string;
+    user_id: string;
   };
 }
 
 export function PdfChatLayout({ pdf }: PdfChatLayoutProps) {
   const [isMobile, setIsMobile] = useState(false);
+  const pdfDocumentLink =
+    process.env.NEXT_PUBLIC_UPLOAD_FOLDER_ROOT + pdf.document_link;
+  //file:///D:/DEV/PDFSideKick/pdfsidekick-backend/uploads/6ef257b8-2ae6-4105-b3be-45ecb8b4f49d.pdf
+  console.log(pdfDocumentLink);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -44,8 +55,7 @@ export function PdfChatLayout({ pdf }: PdfChatLayoutProps) {
           <Card className="h-full rounded-none border-0 p-0 gap-0">
             <div className="h-full">
               <div className="h-full bg-gray-100 rounded-none flex items-center justify-center">
-                {/* PDF Viewer will be implemented here */}
-                <p className="text-gray-500">PDF Preview</p>
+                <PdfViewer documentLink={pdfDocumentLink} />
               </div>
             </div>
           </Card>
