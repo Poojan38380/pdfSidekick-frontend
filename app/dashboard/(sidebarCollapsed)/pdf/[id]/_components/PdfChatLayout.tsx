@@ -69,7 +69,7 @@ export function PdfChatLayout({ pdf }: PdfChatLayoutProps) {
         {/* PDF Viewer Section */}
         <Panel defaultSize={50} minSize={20} maxSize={80} className="p-0">
           <Card className="h-full rounded-none border-0 p-0">
-            <div className="h-full bg-gray-100 rounded-none flex items-center justify-center">
+            <div className="h-full bg-muted rounded-none flex items-center justify-center">
               <PdfViewer documentLink={pdfDocumentLink} />
             </div>
           </Card>
