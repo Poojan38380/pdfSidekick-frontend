@@ -19,7 +19,7 @@ export default async function AdminLayout({
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset className="overflow-x-auto   ">
-        <DashHeader></DashHeader>
+        <DashHeader />
         {children}
       </SidebarInset>
     </SidebarProvider>
