@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@/lib/auth";
-import { PdfDocumentType } from "../../(pdfsView)/_actions/getUserPdfs";
+import { PdfDocumentType } from "../../../(sidebarOpen)/(pdfsView)/_actions/getUserPdfs";
 
 export async function getSinglePdf(pdfId: string): Promise<PdfDocumentType> {
     const session = await auth();
