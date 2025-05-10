@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
@@ -15,10 +15,27 @@ interface PdfChatLayoutProps {
 }
 
 export function PdfChatLayout({ pdf }: PdfChatLayoutProps) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768); // md breakpoint
+    };
+
+    // Initial check
+    checkMobile();
+
+    // Add event listener
+    window.addEventListener("resize", checkMobile);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <div className="h-[calc(100vh-4rem)]">
       <PanelGroup
-        direction="vertical"
+        direction={isMobile ? "vertical" : "horizontal"}
         className="h-full"
         autoSaveId="pdf-chat-layout"
       >
@@ -35,7 +52,11 @@ export function PdfChatLayout({ pdf }: PdfChatLayoutProps) {
         </Panel>
 
         {/* Resize Handle */}
-        <PanelResizeHandle className="h-2 bg-border hover:bg-primary/20 transition-colors" />
+        <PanelResizeHandle
+          className={`${
+            isMobile ? "h-2" : "h-full w-2"
+          } bg-border hover:bg-primary/20 transition-colors`}
+        />
 
         {/* Chat Section */}
         <Panel defaultSize={75} minSize={20} maxSize={80}>
