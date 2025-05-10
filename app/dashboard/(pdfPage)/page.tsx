@@ -106,7 +106,10 @@ const DashboardPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredPdfs.map((pdf) => (
-          <Card key={pdf.id} className="group hover:shadow-md transition-all">
+          <Card
+            key={pdf.id}
+            className="group hover:shadow-md transition-all py-2 gap-0"
+          >
             <CardHeader className="p-4">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
@@ -147,13 +150,13 @@ const DashboardPage = () => {
                 </DropdownMenu>
               </div>
             </CardHeader>
-            <CardContent className="p-4 pt-0">
-              {pdf.description && (
+            {pdf.description && (
+              <CardContent className="p-4 pt-0">
                 <p className="text-sm text-muted-foreground line-clamp-2">
                   {pdf.description}
                 </p>
-              )}
-            </CardContent>
+              </CardContent>
+            )}
           </Card>
         ))}
       </div>
