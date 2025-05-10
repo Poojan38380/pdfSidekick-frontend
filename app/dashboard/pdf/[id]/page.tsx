@@ -1,5 +1,7 @@
 import { decodeURLid } from "@/utils/url-encoder-decoder";
 import React from "react";
+import { getSinglePdf } from "../_actions/getSinglePdf";
+import { PdfChatLayout } from "./_components/PdfChatLayout";
 
 interface PdfViewerPageProps {
   params: Promise<{ id: string }>;
@@ -8,7 +10,10 @@ interface PdfViewerPageProps {
 const PdfViewerPage = async ({ params }: PdfViewerPageProps) => {
   const { id } = await params;
   const decodedId = decodeURLid(id);
-  return <div>{decodedId}</div>;
+
+  const pdf = await getSinglePdf(decodedId);
+
+  return <PdfChatLayout pdf={pdf} />;
 };
 
 export default PdfViewerPage;
