@@ -28,8 +28,6 @@ export function PdfChatLayout({ pdf }: PdfChatLayoutProps) {
   //Example pdf link: https://res.cloudinary.com/dxvvg9nwf/raw/upload/v1746874055/pdfs/7621573f-022e-467e-9fe9-a7e7d8b1f27f
   const pdfDocumentLink = pdf.document_link;
 
-  console.log("PDF Document Link:", pdfDocumentLink);
-
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768); // md breakpoint
@@ -63,7 +61,7 @@ export function PdfChatLayout({ pdf }: PdfChatLayoutProps) {
       >
         {/* PDF Viewer Section */}
         <Panel defaultSize={50} minSize={20} maxSize={80} className="p-0">
-          <Card className="h-full rounded-none border-0 p-0">
+          <Card className="h-[100%] rounded-none border-0 p-0">
             <div className="h-full bg-muted rounded-none flex items-center justify-center">
               <PdfViewer documentLink={pdfDocumentLink} />
             </div>
@@ -79,7 +77,7 @@ export function PdfChatLayout({ pdf }: PdfChatLayoutProps) {
 
         {/* Chat Section */}
         <Panel defaultSize={50} minSize={20} maxSize={80}>
-          <Card className="h-full rounded-none border-0">
+          <Card className="h-[100%]  rounded-none border-0">
             <div className="flex flex-col h-full">
               {/* Chat Messages Area */}
               <ScrollArea className="flex-1 p-4">
