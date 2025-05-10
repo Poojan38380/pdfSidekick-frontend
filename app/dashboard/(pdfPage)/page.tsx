@@ -13,26 +13,19 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { formatDistanceToNow } from "date-fns";
-
-interface PdfDocument {
-  id: string;
-  title: string;
-  description?: string;
-  uploadedAt: string;
-  fileUrl: string;
-}
+import { getUserPdfs, PdfDocumentType } from "./_actions/getUserPdfs";
 
 const DashboardPage = () => {
-  const [pdfs, setPdfs] = useState<PdfDocument[]>([]);
+  const [pdfs, setPdfs] = useState<PdfDocumentType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Fetch PDFs from backend
+  // Fetch PDFs using server action
   useEffect(() => {
     const fetchPdfs = async () => {
       try {
-        const response = await fetch("/api/pdfs");
-        const data = await response.json();
+        const data = await getUserPdfs();
+        console.log(data);
         setPdfs(data);
       } catch (error) {
         console.error("Error fetching PDFs:", error);
@@ -127,7 +120,7 @@ const DashboardPage = () => {
                     <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
                       <Clock className="h-3 w-3" />
                       <span>
-                        {formatDistanceToNow(new Date(pdf.uploadedAt), {
+                        {formatDistanceToNow(new Date(pdf.created_at), {
                           addSuffix: true,
                         })}
                       </span>
