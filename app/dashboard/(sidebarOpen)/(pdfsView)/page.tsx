@@ -78,7 +78,7 @@ const DashboardPage = () => {
         <div className="text-center space-y-2">
           <FileText className="h-12 w-12 text-muted-foreground mx-auto" />
           <h2 className="text-2xl font-semibold">
-            Welcome, {user?.username || "there"}!
+            Welcome, {user?.firstName || "there"}!
           </h2>
           <p className="text-muted-foreground">
             Upload your first PDF to get started with PDF Sidekick
