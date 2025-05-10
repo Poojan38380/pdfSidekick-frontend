@@ -25,14 +25,9 @@ export function PdfChatLayout({ pdf }: PdfChatLayoutProps) {
   const [isMobile, setIsMobile] = useState(false);
   const [message, setMessage] = useState("");
 
-  // Fix: Proper URL construction for PDF document
-  // Ensure NEXT_PUBLIC_UPLOAD_FOLDER_ROOT ends with a slash if needed
-  const baseUrl = process.env.NEXT_PUBLIC_UPLOAD_FOLDER_ROOT || "";
-  const pdfDocumentLink =
-    baseUrl + (baseUrl.endsWith("/") ? "" : "/") + pdf.document_link;
+  //Example pdf link: https://res.cloudinary.com/dxvvg9nwf/raw/upload/v1746874055/pdfs/7621573f-022e-467e-9fe9-a7e7d8b1f27f
+  const pdfDocumentLink = pdf.document_link;
 
-  // Use a proper URL or relative path instead of file:/// protocol
-  // Example: "/api/pdf/view/" + pdf.document_link or proper URL
   console.log("PDF Document Link:", pdfDocumentLink);
 
   useEffect(() => {
