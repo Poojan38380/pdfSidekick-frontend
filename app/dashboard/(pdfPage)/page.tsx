@@ -16,11 +16,15 @@ import { formatDistanceToNow } from "date-fns";
 import { getUserPdfs, PdfDocumentType } from "./_actions/getUserPdfs";
 import Link from "next/link";
 import { encodeURLid } from "@/utils/url-encoder-decoder";
+import { useSession } from "next-auth/react";
+import { CustomUser } from "@/lib/auth";
 
 const DashboardPage = () => {
   const [pdfs, setPdfs] = useState<PdfDocumentType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const { data: session } = useSession();
+  const user = session?.user as CustomUser;
 
   const fetchPdfs = async () => {
     try {
@@ -73,7 +77,9 @@ const DashboardPage = () => {
       <div className="flex flex-col w-full h-full justify-center items-center gap-6 p-6">
         <div className="text-center space-y-2">
           <FileText className="h-12 w-12 text-muted-foreground mx-auto" />
-          <h2 className="text-2xl font-semibold">No PDFs Found</h2>
+          <h2 className="text-2xl font-semibold">
+            Welcome, {user?.username || "there"}!
+          </h2>
           <p className="text-muted-foreground">
             Upload your first PDF to get started with PDF Sidekick
           </p>
@@ -87,7 +93,9 @@ const DashboardPage = () => {
     <div className="p-6 space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="space-y-1">
-          <h1 className="text-2xl font-bold">Your PDFs</h1>
+          <h1 className="text-2xl font-bold">
+            Welcome back, {user?.firstName || "there"}!
+          </h1>
           <p className="text-sm text-muted-foreground">
             Manage and interact with your PDF documents
           </p>
