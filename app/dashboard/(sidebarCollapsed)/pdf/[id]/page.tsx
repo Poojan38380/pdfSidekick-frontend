@@ -1,7 +1,7 @@
 import { decodeURLid } from "@/utils/url-encoder-decoder";
 import React from "react";
 import { getSinglePdf } from "../_actions/getSinglePdf";
-import { PdfChatLayout } from "./_components/PdfChatLayout";
+import { PdfChatLayout } from "../_components/PdfChatLayout";
 
 interface PdfViewerPageProps {
   params: Promise<{ id: string }>;
