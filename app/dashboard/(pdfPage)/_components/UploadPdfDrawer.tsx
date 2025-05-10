@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useDropzone } from "react-dropzone";
 import { uploadPdf } from "../_actions/uploadPdf";
+import { Progress } from "@/components/ui/progress";
 
 interface PdfDocument {
   id: string;
@@ -37,6 +38,20 @@ const UploadPdfDrawer: React.FC<UploadPdfDrawerProps> = ({
   const [pdfDescription, setPdfDescription] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+
+  const quotes = [
+    "The only true wisdom is in knowing you know nothing. - Socrates",
+    "The important thing is not to stop questioning. - Albert Einstein",
+    "Curiosity is the wick in the candle of learning. - William Arthur Ward",
+    "The more I learn, the more I realize how much I don't know. - Albert Einstein",
+    "Knowledge is power. - Francis Bacon",
+    "The beautiful thing about learning is that no one can take it away from you. - B.B. King",
+    "Live as if you were to die tomorrow. Learn as if you were to live forever. - Mahatma Gandhi",
+    "The capacity to learn is a gift; the ability to learn is a skill; the willingness to learn is a choice. - Brian Herbert",
+  ];
+
+  const [currentQuote, setCurrentQuote] = useState(quotes[0]);
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -67,6 +82,7 @@ const UploadPdfDrawer: React.FC<UploadPdfDrawerProps> = ({
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsUploading(true);
+    setUploadProgress(0);
 
     if (!selectedFile) {
       toast.error("Please upload a PDF file.");
@@ -79,6 +95,22 @@ const UploadPdfDrawer: React.FC<UploadPdfDrawerProps> = ({
       return;
     }
 
+    // Start quote rotation
+    const quoteInterval = setInterval(() => {
+      setCurrentQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+    }, 3000);
+
+    // Simulate progress
+    const progressInterval = setInterval(() => {
+      setUploadProgress((prev) => {
+        if (prev >= 90) {
+          clearInterval(progressInterval);
+          return prev;
+        }
+        return prev + 10;
+      });
+    }, 500);
+
     const formData = new FormData();
     formData.append("file", selectedFile);
     formData.append("title", pdfTitle);
@@ -86,7 +118,9 @@ const UploadPdfDrawer: React.FC<UploadPdfDrawerProps> = ({
 
     try {
       const newPdf = await uploadPdf(formData);
-      console.log(newPdf);
+      setUploadProgress(100);
+      clearInterval(quoteInterval);
+      clearInterval(progressInterval);
       onUploadSuccess?.(newPdf);
       toast.success("PDF uploaded successfully");
       // Reset form
@@ -94,10 +128,13 @@ const UploadPdfDrawer: React.FC<UploadPdfDrawerProps> = ({
       setPdfDescription("");
       setSelectedFile(null);
     } catch (error) {
+      clearInterval(quoteInterval);
+      clearInterval(progressInterval);
       console.error("Error uploading PDF:", error);
       toast.error(error instanceof Error ? error.message : "Upload failed");
     } finally {
       setIsUploading(false);
+      setUploadProgress(0);
     }
   };
 
@@ -210,13 +247,22 @@ const UploadPdfDrawer: React.FC<UploadPdfDrawerProps> = ({
                 />
               </div>
             </div>
+
+            {isUploading && (
+              <div className="space-y-4">
+                <Progress value={uploadProgress} className="w-full" />
+                <div className="text-center text-sm text-muted-foreground italic">
+                  {currentQuote}
+                </div>
+              </div>
+            )}
           </div>
           <DrawerFooter>
             <Button type="submit" disabled={isUploading} className="gap-2">
               {isUploading ? (
                 <>
                   <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                  Uploading...
+                  Uploading... {uploadProgress}%
                 </>
               ) : (
                 <>
