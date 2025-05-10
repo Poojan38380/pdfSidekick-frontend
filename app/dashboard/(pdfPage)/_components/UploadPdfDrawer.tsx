@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useDropzone } from "react-dropzone";
+import { uploadPdf } from "../_actions/uploadPdf";
 
 interface PdfDocument {
   id: string;
@@ -67,8 +68,13 @@ const UploadPdfDrawer: React.FC<UploadPdfDrawerProps> = ({
     e.preventDefault();
     setIsUploading(true);
 
-    if (!selectedFile || !pdfTitle.trim()) {
-      toast.error("Please select a file and provide a title");
+    if (!selectedFile) {
+      toast.error("Please upload a PDF file.");
+      setIsUploading(false);
+      return;
+    }
+    if (!pdfTitle) {
+      toast.error("Please provide a title");
       setIsUploading(false);
       return;
     }
@@ -79,25 +85,17 @@ const UploadPdfDrawer: React.FC<UploadPdfDrawerProps> = ({
     formData.append("description", pdfDescription);
 
     try {
-      const response = await fetch("/api/upload-pdf", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        const newPdf = await response.json();
-        onUploadSuccess?.(newPdf);
-        toast.success("PDF uploaded successfully");
-        // Reset form
-        setPdfTitle("");
-        setPdfDescription("");
-        setSelectedFile(null);
-      } else {
-        toast.error("Upload failed");
-      }
+      const newPdf = await uploadPdf(formData);
+      console.log(newPdf);
+      onUploadSuccess?.(newPdf);
+      toast.success("PDF uploaded successfully");
+      // Reset form
+      setPdfTitle("");
+      setPdfDescription("");
+      setSelectedFile(null);
     } catch (error) {
       console.error("Error uploading PDF:", error);
-      toast.error("Upload failed");
+      toast.error(error instanceof Error ? error.message : "Upload failed");
     } finally {
       setIsUploading(false);
     }
