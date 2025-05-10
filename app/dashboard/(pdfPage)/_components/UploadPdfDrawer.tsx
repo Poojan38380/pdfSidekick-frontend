@@ -18,6 +18,7 @@ import { Label } from "@/components/ui/label";
 import { useDropzone } from "react-dropzone";
 import { uploadPdf } from "../_actions/uploadPdf";
 import { Progress } from "@/components/ui/progress";
+import quotes from "@/staticData/loadingQuotes";
 
 interface PdfDocument {
   id: string;
@@ -39,19 +40,11 @@ const UploadPdfDrawer: React.FC<UploadPdfDrawerProps> = ({
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const quotes = [
-    "The only true wisdom is in knowing you know nothing. - Socrates",
-    "The important thing is not to stop questioning. - Albert Einstein",
-    "Curiosity is the wick in the candle of learning. - William Arthur Ward",
-    "The more I learn, the more I realize how much I don't know. - Albert Einstein",
-    "Knowledge is power. - Francis Bacon",
-    "The beautiful thing about learning is that no one can take it away from you. - B.B. King",
-    "Live as if you were to die tomorrow. Learn as if you were to live forever. - Mahatma Gandhi",
-    "The capacity to learn is a gift; the ability to learn is a skill; the willingness to learn is a choice. - Brian Herbert",
-  ];
-
-  const [currentQuote, setCurrentQuote] = useState(quotes[0]);
+  const [currentQuote, setCurrentQuote] = useState(
+    quotes[Math.floor(Math.random() * quotes.length)]
+  );
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -123,10 +116,11 @@ const UploadPdfDrawer: React.FC<UploadPdfDrawerProps> = ({
       clearInterval(progressInterval);
       onUploadSuccess?.(newPdf);
       toast.success("PDF uploaded successfully");
-      // Reset form
+      // Reset form and close drawer
       setPdfTitle("");
       setPdfDescription("");
       setSelectedFile(null);
+      setIsOpen(false);
     } catch (error) {
       clearInterval(quoteInterval);
       clearInterval(progressInterval);
@@ -143,7 +137,7 @@ const UploadPdfDrawer: React.FC<UploadPdfDrawerProps> = ({
   };
 
   return (
-    <Drawer>
+    <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>
         <Button className="cursor-pointer">
           <Plus className="mr-2 h-4 w-4" />
@@ -251,7 +245,7 @@ const UploadPdfDrawer: React.FC<UploadPdfDrawerProps> = ({
             {isUploading && (
               <div className="space-y-4">
                 <Progress value={uploadProgress} className="w-full" />
-                <div className="text-center text-sm text-muted-foreground italic">
+                <div className="text-center text-sm italic text-muted-foreground">
                   {currentQuote}
                 </div>
               </div>
