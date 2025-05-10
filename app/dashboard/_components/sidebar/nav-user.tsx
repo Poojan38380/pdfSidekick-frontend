@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/sidebar";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { CustomUser } from "@/lib/auth";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
@@ -27,7 +28,7 @@ export function NavUser() {
   if (status === "loading") {
     return <SidebarMenu>Loading...</SidebarMenu>;
   }
-  const user = session!.user;
+  const user = session!.user as CustomUser;
 
   return (
     <SidebarMenu>

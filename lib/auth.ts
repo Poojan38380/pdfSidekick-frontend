@@ -1,8 +1,22 @@
 import bcrypt from "bcryptjs";
 import NextAuth from "next-auth";
+import type { Session } from "next-auth";
+import type { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { JWT } from "next-auth/jwt";
 import prisma from "./prisma";
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      username: string;
+      profilePic: string;
+      email: string;
+      firstName: string;
+      lastName: string;
+    }
+  }
+}
 
 export interface CustomUser {
   id: string;
@@ -13,7 +27,7 @@ export interface CustomUser {
   email: string;
 }
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const authConfig = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -60,7 +74,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
-    // @ts-expect-error: TypeScript may not correctly infer the shape of the `token` and `user` objects in NextAuth's `jwt` callback.
     async jwt({ token, user }: { token: JWT; user?: CustomUser }) {
       if (user) {
         token.id = user.id;
@@ -72,19 +85,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return token;
     },
-    // @ts-expect-error: TypeScript might not infer the structure of `session.user` as expected in the `session` callback.
     async session({ session, token }: { session: Session; token: JWT }) {
-      session.user.id = token.id as string;
-      session.user.username = token.username as string;
-      session.user.profilePic = token.profilePic as string;
-      session.user.email = token.email as string;
-      session.user.firstName = token.firstName as string;
-      session.user.lastName = token.lastName as string;
+      if (session.user) {
+        session.user.id = token.id as string;
+        session.user.username = token.username as string;
+        session.user.profilePic = token.profilePic as string;
+        session.user.email = token.email as string;
+        session.user.firstName = token.firstName as string;
+        session.user.lastName = token.lastName as string;
+      }
       return session;
     },
   },
-
   pages: {
     signIn: "/login",
   },
-});
+};
+
+export const { handlers, signIn, signOut, auth } = NextAuth(authConfig);
