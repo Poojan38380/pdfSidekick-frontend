@@ -14,6 +14,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { formatDistanceToNow } from "date-fns";
 import { getUserPdfs, PdfDocumentType } from "./_actions/getUserPdfs";
+import Link from "next/link";
+import { encodeURLid } from "@/utils/url-encoder-decoder";
 
 const DashboardPage = () => {
   const [pdfs, setPdfs] = useState<PdfDocumentType[]>([]);
@@ -106,58 +108,65 @@ const DashboardPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredPdfs.map((pdf) => (
-          <Card
+          <Link
+            href={`/dashboard/pdf/${encodeURLid(pdf.id)}`}
             key={pdf.id}
-            className="group hover:shadow-md transition-all py-2 gap-0"
+            target="_blank"
+            prefetch={false}
           >
-            <CardHeader className="p-4">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="bg-primary/10 p-2 rounded-lg">
-                    <FileText className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <CardTitle className="text-base font-medium line-clamp-1">
-                      {pdf.title}
-                    </CardTitle>
-                    <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
-                      <Clock className="h-3 w-3" />
-                      <span>
-                        {formatDistanceToNow(new Date(pdf.created_at), {
-                          addSuffix: true,
-                        })}
-                      </span>
+            <Card
+              key={pdf.id}
+              className="group hover:shadow-md transition-all py-2 gap-0 h-min"
+            >
+              <CardHeader className="p-4">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="bg-primary/10 p-2 rounded-lg">
+                      <FileText className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-base font-medium line-clamp-1">
+                        {pdf.title}
+                      </CardTitle>
+                      <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
+                        <Clock className="h-3 w-3" />
+                        <span>
+                          {formatDistanceToNow(new Date(pdf.created_at), {
+                            addSuffix: true,
+                          })}
+                        </span>
+                      </div>
                     </div>
                   </div>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <MoreVertical className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem>View Details</DropdownMenuItem>
+                      <DropdownMenuItem>Download</DropdownMenuItem>
+                      <DropdownMenuItem className="text-destructive">
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      <MoreVertical className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem>View Details</DropdownMenuItem>
-                    <DropdownMenuItem>Download</DropdownMenuItem>
-                    <DropdownMenuItem className="text-destructive">
-                      Delete
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            </CardHeader>
-            {pdf.description && (
-              <CardContent className="p-4 pt-0">
-                <p className="text-sm text-muted-foreground line-clamp-2">
-                  {pdf.description}
-                </p>
-              </CardContent>
-            )}
-          </Card>
+              </CardHeader>
+              {pdf.description && (
+                <CardContent className="p-4 pt-0">
+                  <p className="text-sm text-muted-foreground line-clamp-2">
+                    {pdf.description}
+                  </p>
+                </CardContent>
+              )}
+            </Card>
+          </Link>
         ))}
       </div>
     </div>
