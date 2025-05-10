@@ -20,21 +20,21 @@ const DashboardPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
 
+  const fetchPdfs = async () => {
+    try {
+      const data = await getUserPdfs();
+      console.log(data);
+      setPdfs(data);
+    } catch (error) {
+      console.error("Error fetching PDFs:", error);
+      setPdfs([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // Fetch PDFs using server action
   useEffect(() => {
-    const fetchPdfs = async () => {
-      try {
-        const data = await getUserPdfs();
-        console.log(data);
-        setPdfs(data);
-      } catch (error) {
-        console.error("Error fetching PDFs:", error);
-        setPdfs([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchPdfs();
   }, []);
 
@@ -100,7 +100,7 @@ const DashboardPage = () => {
               className="pl-8 w-full sm:w-[200px]"
             />
           </div>
-          <UploadPdfDrawer />
+          <UploadPdfDrawer onUploadSuccess={() => fetchPdfs()} />
         </div>
       </div>
 
