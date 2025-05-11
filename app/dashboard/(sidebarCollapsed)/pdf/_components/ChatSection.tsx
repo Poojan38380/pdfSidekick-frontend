@@ -6,23 +6,16 @@ import { Button } from "@/components/ui/button";
 import { Send } from "lucide-react";
 import { useChatSocket, Message } from "@/app/hooks/use-chat-socket";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { CustomUser } from "@/lib/auth";
-import {
-  Panel,
-  PanelResizeHandle,
-  ImperativePanelHandle,
-} from "react-resizable-panels";
+import { Panel, PanelResizeHandle } from "react-resizable-panels";
 import ChatHeader from "./ChatHeader";
 import MessageBubble from "./MessageBubble";
 const ChatSection = ({
   pdfId,
   isMobile,
-  chatPanelRef,
 }: {
   pdfId: string;
   isMobile: boolean;
-  chatPanelRef: React.RefObject<ImperativePanelHandle>;
 }) => {
   const [message, setMessage] = useState("");
   const { messages, status, error, connect, sendMessage } = useChatSocket({
@@ -74,13 +67,7 @@ const ChatSection = ({
           <ChatHeader status={status} error={error} isMobile={isMobile} />
         )}
       </PanelResizeHandle>
-      <Panel
-        defaultSize={60}
-        minSize={40}
-        maxSize={100}
-        ref={chatPanelRef}
-        className="transition-all duration-1000 ease-in-out"
-      >
+      <Panel defaultSize={70} minSize={40} maxSize={100}>
         <Card className="h-[100%] py-0 rounded-none border-0 gap-0 flex flex-col bg-background/80 backdrop-blur-sm">
           {/* Header */}
 
@@ -89,24 +76,15 @@ const ChatSection = ({
           {/* Chat Messages Area */}
           <ScrollArea className="flex-1 p-4 py-2 flex flex-col ">
             <div className="space-y-0 flex flex-col justify-end min-h-full">
-              <div className="bg-muted/60 p-3 py-1 rounded-lg max-w-[75%]">
-                <div className="flex items-center gap-2 mb-1.5">
-                  <div className="relative h-5 w-5">
-                    <Image
-                      src="/logo-1000x1000.png"
-                      alt="PDF Sidekick"
-                      fill
-                      className="object-cover rounded-md"
-                    />
-                  </div>
-                  <p className="text-xs font-medium">PDF Sidekick</p>
-                </div>
-                <p className="text-sm">
-                  Welcome! Ask me questions about your PDF document.
-                </p>
-              </div>
-
-              {/* Render Messages */}
+              <MessageBubble
+                msg={{
+                  id: "1",
+                  content: "Welcome! Ask me questions about your PDF document.",
+                  sender: "assistant",
+                  timestamp: new Date().toISOString(),
+                }}
+                user={user}
+              />
               {messages.map((msg: Message) => (
                 <MessageBubble key={msg.id} msg={msg} user={user} />
               ))}
