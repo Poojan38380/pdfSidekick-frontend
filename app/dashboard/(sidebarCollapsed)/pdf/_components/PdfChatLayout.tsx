@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
+import { Panel, PanelGroup } from "react-resizable-panels";
 import { PdfViewer } from "./PdfViewer";
 import ChatSection from "./ChatSection";
 
@@ -47,7 +47,7 @@ export function PdfChatLayout({ pdf }: PdfChatLayoutProps) {
         autoSaveId="pdf-chat-layout"
       >
         {/* PDF Viewer Section */}
-        <Panel defaultSize={50} minSize={20} maxSize={80} className="p-0">
+        <Panel defaultSize={40} minSize={0} maxSize={60} className="p-0">
           <Card className="h-[100%] rounded-none border-0 p-0">
             <div className="h-full bg-muted rounded-none flex items-center justify-center">
               <PdfViewer documentLink={pdfDocumentLink} />
@@ -55,17 +55,9 @@ export function PdfChatLayout({ pdf }: PdfChatLayoutProps) {
           </Card>
         </Panel>
 
-        {/* Resize Handle */}
-        <PanelResizeHandle
-          className={`${
-            isMobile ? "h-2" : "h-full w-2"
-          } bg-border hover:bg-primary/20 transition-colors`}
-        />
-
         {/* Chat Section */}
-        <Panel defaultSize={50} minSize={20} maxSize={80}>
-          <ChatSection pdfId={pdf.id} />
-        </Panel>
+
+        <ChatSection pdfId={pdf.id} isMobile={isMobile} />
       </PanelGroup>
     </div>
   );
