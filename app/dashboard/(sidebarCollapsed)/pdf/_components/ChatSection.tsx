@@ -53,6 +53,10 @@ const ChatSection = ({
     }
   };
 
+  const handleRefreshConnection = () => {
+    connect();
+  };
+
   return (
     <>
       {/* Resize Handle */}
@@ -64,14 +68,25 @@ const ChatSection = ({
         } bg-border hover:bg-primary/20  transition-colors  `}
       >
         {isMobile && (
-          <ChatHeader status={status} error={error} isMobile={isMobile} />
+          <ChatHeader
+            status={status}
+            error={error}
+            isMobile={isMobile}
+            onRefresh={handleRefreshConnection}
+          />
         )}
       </PanelResizeHandle>
       <Panel defaultSize={70} minSize={40} maxSize={100}>
         <Card className="h-[100%] py-0 rounded-none border-0 gap-0 flex flex-col bg-background/80 backdrop-blur-sm">
           {/* Header */}
 
-          {!isMobile && <ChatHeader status={status} error={error} />}
+          {!isMobile && (
+            <ChatHeader
+              status={status}
+              error={error}
+              onRefresh={handleRefreshConnection}
+            />
+          )}
 
           {/* Chat Messages Area */}
           <ScrollArea className="flex-1 p-4 py-2 flex flex-col ">

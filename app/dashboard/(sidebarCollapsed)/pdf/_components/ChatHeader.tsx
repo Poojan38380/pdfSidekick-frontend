@@ -1,13 +1,20 @@
 import React from "react";
 import Image from "next/image";
-import { Loader2, MoveVertical, XCircle } from "lucide-react";
+import { Loader2, MoveVertical, XCircle, RefreshCw } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface ChatHeaderProps {
   status: "connected" | "connecting" | "disconnected";
   error: string | null;
   isMobile?: boolean;
+  onRefresh?: () => void;
 }
-const ChatHeader = ({ status, error, isMobile }: ChatHeaderProps) => {
+const ChatHeader = ({
+  status,
+  error,
+  isMobile,
+  onRefresh,
+}: ChatHeaderProps) => {
   return (
     <div className="border-b p-3 flex items-center justify-between shadow-sm">
       <div className="flex items-center gap-2">
@@ -44,9 +51,22 @@ const ChatHeader = ({ status, error, isMobile }: ChatHeaderProps) => {
           </div>
         </div>
       </div>
-      {isMobile && (
-        <MoveVertical className="text-xs stroke-[1.5] text-muted-foreground" />
-      )}
+      <div className="flex items-center gap-2">
+        {(status === "connected" || status === "disconnected") && (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onRefresh}
+            className="h-6 w-6"
+            title="Reconnect"
+          >
+            <RefreshCw className="h-3.5 w-3.5" />
+          </Button>
+        )}
+        {isMobile && (
+          <MoveVertical className="text-xs stroke-[1.5] text-muted-foreground" />
+        )}
+      </div>
     </div>
   );
 };
