@@ -3,7 +3,13 @@ import React, { useState, useEffect } from "react";
 import UploadPdfDrawer from "./_components/UploadPdfDrawer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { FileText, Clock, MoreVertical, Search } from "lucide-react";
+import {
+  FileText,
+  Clock,
+  MoreVertical,
+  Search,
+  AlertCircle,
+} from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
@@ -18,6 +24,8 @@ import Link from "next/link";
 import { encodeURLid } from "@/utils/url-encoder-decoder";
 import { useSession } from "next-auth/react";
 import { CustomUser } from "@/lib/auth";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
 
 const DashboardPage = () => {
   const [pdfs, setPdfs] = useState<PdfDocumentType[]>([]);
@@ -166,13 +174,66 @@ const DashboardPage = () => {
                   </DropdownMenu>
                 </div>
               </CardHeader>
-              {pdf.description && (
-                <CardContent className="p-4 pt-0">
+              <CardContent className="p-4 pt-0 space-y-2">
+                {pdf.description && (
                   <p className="text-sm text-muted-foreground line-clamp-2">
                     {pdf.description}
                   </p>
-                </CardContent>
-              )}
+                )}
+
+                {/* Processing Status */}
+                {pdf.processing_status && (
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5">
+                        <Badge
+                          variant={
+                            pdf.processing_status === "completed"
+                              ? "success"
+                              : pdf.processing_status === "pending"
+                              ? "outline"
+                              : pdf.processing_status === "processing"
+                              ? "secondary"
+                              : "destructive"
+                          }
+                          className="text-xs py-0 h-5"
+                        >
+                          {pdf.processing_status === "completed"
+                            ? "Ready"
+                            : pdf.processing_status === "pending"
+                            ? "Pending"
+                            : pdf.processing_status === "processing"
+                            ? "Processing"
+                            : "Failed"}
+                        </Badge>
+
+                        {pdf.processing_status === "failed" &&
+                          pdf.error_message && (
+                            <div className="text-xs text-destructive flex items-center">
+                              <AlertCircle className="h-3 w-3 mr-1" />
+                              <span className="line-clamp-1">
+                                {pdf.error_message}
+                              </span>
+                            </div>
+                          )}
+                      </div>
+
+                      {pdf.processing_status === "processing" && (
+                        <span className="text-xs text-muted-foreground">
+                          {pdf.processing_progress}%
+                        </span>
+                      )}
+                    </div>
+
+                    {pdf.processing_status === "processing" && (
+                      <Progress
+                        value={pdf.processing_progress || 0}
+                        className="h-1.5"
+                      />
+                    )}
+                  </div>
+                )}
+              </CardContent>
             </Card>
           </Link>
         ))}

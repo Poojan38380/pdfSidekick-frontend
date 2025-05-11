@@ -10,6 +10,10 @@ export type PdfDocumentType = {
     updated_at: string;
     document_link: string;
     user_id: string;
+    processing_status: 'pending' | 'processing' | 'completed' | 'failed';
+    processing_progress: number;
+    total_pages: number | null;
+    error_message: string | null;
 }
 
 export async function getUserPdfs(): Promise<PdfDocumentType[]> {
@@ -37,6 +41,7 @@ export async function getUserPdfs(): Promise<PdfDocumentType[]> {
         }
 
         const data = await response.json();
+        console.log(data);
         return data;
     } catch (error) {
         console.error("Error fetching PDFs:", error);
