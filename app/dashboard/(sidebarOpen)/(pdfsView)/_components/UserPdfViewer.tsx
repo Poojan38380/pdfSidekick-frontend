@@ -16,8 +16,26 @@ import {
 import { Button } from "@/components/ui/button";
 import { AlertCircle } from "lucide-react";
 import { Clock } from "lucide-react";
+import UploadPdfDrawer from "./UploadPdfDrawer";
 
 const UserPdfViewer = ({ pdfs }: { pdfs: PdfDocumentType[] }) => {
+  if (pdfs.length === 0) {
+    return (
+      <div className="flex flex-col w-full h-full justify-center items-center gap-6 p-6">
+        <div className="text-center space-y-2">
+          <FileText className="h-12 w-12 text-muted-foreground mx-auto" />
+          <h2 className="text-2xl font-semibold">
+            No PDFs found for your query
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Upload a PDF to get started / try a different search term
+          </p>
+        </div>
+        <UploadPdfDrawer />
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {pdfs.map((pdf) => (
