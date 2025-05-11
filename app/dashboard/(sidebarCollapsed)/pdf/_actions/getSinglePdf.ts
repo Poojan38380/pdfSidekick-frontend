@@ -28,7 +28,11 @@ export async function getSinglePdf(pdfId: string): Promise<PdfDocumentType> {
         }
 
         const data = await response.json();
-        return data;
+        if (data) {
+            return data;
+        } else {
+            throw new Error(data.message || "Failed to fetch PDF");
+        }
     } catch (error) {
         console.error("Error fetching PDF:", error);
         throw new Error(error instanceof Error ? error.message : "Failed to fetch PDF");

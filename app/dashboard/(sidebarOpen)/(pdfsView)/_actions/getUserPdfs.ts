@@ -41,8 +41,11 @@ export async function getUserPdfs(): Promise<PdfDocumentType[]> {
         }
 
         const data = await response.json();
-        console.log(data);
-        return data;
+        if (data) {
+            return data;
+        } else {
+            throw new Error(data.message || "Failed to fetch PDFs");
+        }
     } catch (error) {
         console.error("Error fetching PDFs:", error);
         throw new Error(error instanceof Error ? error.message : "Failed to fetch PDFs");

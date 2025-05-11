@@ -38,7 +38,7 @@ const DashboardPage = () => {
     try {
       const data = await getUserPdfs();
       console.log(data);
-      setPdfs(data);
+      setPdfs(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Error fetching PDFs:", error);
       setPdfs([]);

@@ -7,6 +7,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
 import React from "react";
+import { HealthStatus } from "./health-status";
 
 const DashHeader = () => {
   return (
@@ -16,6 +17,7 @@ const DashHeader = () => {
         <Separator orientation="vertical" className="mr-2 h-4" />
         <div className="flex justify-end w-full items-center">
           <div className="flex items-center gap-2">
+            <HealthStatus />
             <InstallAppButton />
             <ThemeToggleButton />
             <Button
