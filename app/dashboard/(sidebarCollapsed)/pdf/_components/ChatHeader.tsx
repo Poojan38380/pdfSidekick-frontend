@@ -9,7 +9,7 @@ interface ChatHeaderProps {
 }
 const ChatHeader = ({ status, error, isMobile }: ChatHeaderProps) => {
   return (
-    <div className="border-b p-3 rounded-2xl flex items-center justify-between">
+    <div className="border-b p-3 flex items-center justify-between shadow-sm">
       <div className="flex items-center gap-2">
         <div className="relative h-8 w-8">
           <Image

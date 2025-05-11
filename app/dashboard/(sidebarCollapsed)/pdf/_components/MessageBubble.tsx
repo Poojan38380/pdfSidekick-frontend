@@ -36,7 +36,7 @@ const MessageBubble = ({ msg, user }: { msg: Message; user?: CustomUser }) => {
       </div>
 
       {isUserMessage && (
-        <Avatar className="h-6 w-6 flex-shrink-0 mt-1">
+        <Avatar className="h-7 w-7 flex-shrink-0 mt-1">
           <AvatarImage src={user?.profilePic} alt="You" />
           <AvatarFallback className="rounded-md bg-primary/10 text-xs">
             {user?.username?.[0]?.toUpperCase() || "U"}

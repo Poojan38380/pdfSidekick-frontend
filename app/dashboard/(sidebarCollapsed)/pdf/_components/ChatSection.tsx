@@ -59,9 +59,9 @@ const ChatSection = ({
       <PanelResizeHandle
         className={`${
           isMobile
-            ? "h-max rounded-t-2xl "
+            ? "h-max rounded-t-2xl mt-[-10px]"
             : "h-full w-3 rounded-l-2xl ml-[-15px]"
-        } bg-border hover:bg-primary/20 hover:opacity-100 transition-colors  `}
+        } bg-border hover:bg-primary/20  transition-colors  `}
       >
         {isMobile && (
           <ChatHeader status={status} error={error} isMobile={isMobile} />
