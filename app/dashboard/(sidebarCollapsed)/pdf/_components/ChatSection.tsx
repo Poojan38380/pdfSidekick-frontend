@@ -5,19 +5,24 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Send } from "lucide-react";
 import { useChatSocket, Message } from "@/app/hooks/use-chat-socket";
-import { format } from "date-fns";
 import { useSession } from "next-auth/react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import { CustomUser } from "@/lib/auth";
-import { Panel, PanelResizeHandle } from "react-resizable-panels";
+import {
+  Panel,
+  PanelResizeHandle,
+  ImperativePanelHandle,
+} from "react-resizable-panels";
 import ChatHeader from "./ChatHeader";
+import MessageBubble from "./MessageBubble";
 const ChatSection = ({
   pdfId,
   isMobile,
+  chatPanelRef,
 }: {
   pdfId: string;
   isMobile: boolean;
+  chatPanelRef: React.RefObject<ImperativePanelHandle>;
 }) => {
   const [message, setMessage] = useState("");
   const { messages, status, error, connect, sendMessage } = useChatSocket({
@@ -55,34 +60,34 @@ const ChatSection = ({
     }
   };
 
-  const formatTimestamp = (timestamp: string) => {
-    try {
-      return format(new Date(timestamp), "HH:mm");
-    } catch {
-      return "";
-    }
-  };
-
   return (
     <>
       {/* Resize Handle */}
       <PanelResizeHandle
         className={`${
           isMobile
-            ? "h-max rounded-t-2xl mt-[-10px]"
-            : "h-full w-3 rounded-l-2xl ml-[-17px]"
+            ? "h-max rounded-t-2xl "
+            : "h-full w-3 rounded-l-2xl ml-[-15px]"
         } bg-border hover:bg-primary/20 hover:opacity-100 transition-colors  `}
       >
-        {isMobile && <ChatHeader status={status} error={error} />}
+        {isMobile && (
+          <ChatHeader status={status} error={error} isMobile={isMobile} />
+        )}
       </PanelResizeHandle>
-      <Panel defaultSize={60} minSize={40} maxSize={100}>
+      <Panel
+        defaultSize={60}
+        minSize={40}
+        maxSize={100}
+        ref={chatPanelRef}
+        className="transition-all duration-1000 ease-in-out"
+      >
         <Card className="h-[100%] py-0 rounded-none border-0 gap-0 flex flex-col bg-background/80 backdrop-blur-sm">
           {/* Header */}
 
           {!isMobile && <ChatHeader status={status} error={error} />}
 
           {/* Chat Messages Area */}
-          <ScrollArea className="flex-1 p-4 py-0 flex flex-col">
+          <ScrollArea className="flex-1 p-4 py-2 flex flex-col ">
             <div className="space-y-0 flex flex-col justify-end min-h-full">
               <div className="bg-muted/60 p-3 py-1 rounded-lg max-w-[75%]">
                 <div className="flex items-center gap-2 mb-1.5">
@@ -103,48 +108,7 @@ const ChatSection = ({
 
               {/* Render Messages */}
               {messages.map((msg: Message) => (
-                <div
-                  key={msg.id}
-                  className={`${
-                    msg.sender === "user" ? "ml-auto" : "mr-auto"
-                  } max-w-[75%]`}
-                >
-                  <div className="flex items-center gap-1.5 mb-1">
-                    {msg.sender === "user" ? (
-                      <Avatar className="h-5 w-5 rounded-md">
-                        <AvatarImage src={user?.profilePic} alt="You" />
-                        <AvatarFallback className="rounded-md bg-primary/10 text-xs">
-                          {user?.username?.[0]?.toUpperCase() || "U"}
-                        </AvatarFallback>
-                      </Avatar>
-                    ) : (
-                      <div className="relative h-5 w-5">
-                        <Image
-                          src="/logo-1000x1000.png"
-                          alt="PDF Sidekick"
-                          fill
-                          className="object-cover rounded-md"
-                        />
-                      </div>
-                    )}
-                    {msg.sender !== "user" && (
-                      <p className="text-xs font-medium">PDF Sidekick</p>
-                    )}
-                  </div>
-
-                  <div
-                    className={`p-2.5 rounded-lg ${
-                      msg.sender === "user"
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-muted/60"
-                    }`}
-                  >
-                    <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
-                    <p className="text-xs mt-0.5 opacity-70 text-right">
-                      {formatTimestamp(msg.timestamp)}
-                    </p>
-                  </div>
-                </div>
+                <MessageBubble key={msg.id} msg={msg} user={user} />
               ))}
               <div ref={messagesEndRef} />
             </div>
