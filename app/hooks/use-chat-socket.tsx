@@ -5,6 +5,7 @@ export interface Message {
   content: string;
   sender: "user" | "assistant";
   timestamp: string;
+  thinking?: string;
 }
 
 interface UseChatSocketProps {
