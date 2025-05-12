@@ -2,7 +2,7 @@
 
 A modern web application that allows users to upload PDF documents and ask questions about their content using AI-powered natural language processing.
 
-![PDFSidekick Banner](public/icon.png)
+![PDFSidekick Banner](public/logo.png)
 
 ## Overview
 
