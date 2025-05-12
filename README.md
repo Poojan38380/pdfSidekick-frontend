@@ -145,4 +145,4 @@ yarn start
 
 ## Related Projects
 
-- [PDFSidekick Backend](https://github.com/your-username/pdfsidekick-backend) - Backend API service
+- [PDFSidekick Backend](https://github.com/Poojan38380/pdfSidekick-backend) - Backend API service
