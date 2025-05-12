@@ -35,6 +35,25 @@ const MessageBubble = ({ msg, user }: MessageBubbleProps) => {
 
   const { thinking, content } = parseContent();
 
+  // Function to format text with markdown-like syntax
+  const formatText = (text: string | null) => {
+    if (!text) return "";
+
+    // Format triple asterisks (bold and italic)
+    let formattedText = text.replace(
+      /\*\*\*(.*?)\*\*\*/g,
+      '<span class="font-bold italic">$1</span>'
+    );
+
+    // Format double asterisks (bold)
+    formattedText = formattedText.replace(
+      /\*\*(.*?)\*\*/g,
+      '<span class="font-bold">$1</span>'
+    );
+
+    return formattedText;
+  };
+
   return (
     <div
       key={msg.id}
@@ -59,7 +78,10 @@ const MessageBubble = ({ msg, user }: MessageBubbleProps) => {
             isUserMessage ? "bg-primary text-primary-foreground" : "bg-muted"
           }`}
         >
-          <p className="text-sm whitespace-pre-wrap">{content}</p>
+          <p
+            className="text-sm whitespace-pre-wrap"
+            dangerouslySetInnerHTML={{ __html: formatText(content) }}
+          />
 
           {thinking && !isUserMessage && (
             <Collapsible open={open} onOpenChange={setOpen} className="mt-2">
@@ -76,7 +98,9 @@ const MessageBubble = ({ msg, user }: MessageBubbleProps) => {
                 </CollapsibleTrigger>
               </div>
               <CollapsibleContent className="mt-2 px-2 py-1 border-l-2 border-primary/20 text-xs whitespace-pre-wrap bg-background/80 rounded text-muted-foreground">
-                {thinking}
+                <div
+                  dangerouslySetInnerHTML={{ __html: formatText(thinking) }}
+                />
               </CollapsibleContent>
             </Collapsible>
           )}
